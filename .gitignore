@@ -30,3 +30,7 @@ override.tf.json
 
 # Mac Files
 .DS_Store
+
+# IDE and AI assistant files
+.idea/
+.ai/
