@@ -3,7 +3,7 @@
 variable "business_divsion" {
   description = "Business Division in the large organization this Infrastructure belongs"
   type = string
-  default = "sap"
+  default = "akowe"
 }
 # Environment Variable
 variable "environment" {
@@ -12,17 +12,16 @@ variable "environment" {
   default = "dev"
 }
 
-# Azure Resource Group Name 
+# Azure Resource Group Name
 variable "resource_group_name" {
   description = "Resource Group Name"
   type = string
-  default = "rg-default"  
+  default = "rg-default"
 }
 
 # Azure Resources Location
 variable "resource_group_location" {
   description = "Region in which Azure Resources to be created"
   type = string
-  default = "eastus2"  
+  default = "westus"
 }
-
