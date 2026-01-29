@@ -37,7 +37,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "web_vmss" {
   source_image_reference {
     publisher = "RedHat"
     offer     = "RHEL"
-    sku       = "83-gen2"
+    sku       = "10-lvm-gen2"
     version   = "latest"
   }
 
@@ -59,8 +59,6 @@ resource "azurerm_linux_virtual_machine_scale_set" "web_vmss" {
       load_balancer_backend_address_pool_ids = [azurerm_lb_backend_address_pool.web_lb_backend_address_pool.id]
     }
   }
-
-  #custom_data = filebase64("${path.module}/app-scripts/redhat-webvm-script.sh")    
   custom_data = base64encode(local.webvm_custom_data)
 }
 

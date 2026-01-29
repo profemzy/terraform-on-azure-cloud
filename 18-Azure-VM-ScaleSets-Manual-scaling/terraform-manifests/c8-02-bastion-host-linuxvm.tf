@@ -41,8 +41,7 @@ resource "azurerm_linux_virtual_machine" "bastion_host_linuxvm" {
   source_image_reference {
     publisher = "RedHat"
     offer     = "RHEL"
-    sku       = "83-gen2"
+    sku       = "10-lvm-gen2"
     version   = "latest"
   }
-  #custom_data = filebase64("${path.module}/app-scripts/redhat-app1-script.sh")    
 }
