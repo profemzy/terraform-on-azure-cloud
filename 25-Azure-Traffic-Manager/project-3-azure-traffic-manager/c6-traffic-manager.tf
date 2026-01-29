@@ -17,7 +17,7 @@ resource "azurerm_traffic_manager_profile" "tm_profile" {
     timeout_in_seconds           = 9
     tolerated_number_of_failures = 3
   }
-  
+
   tags = local.common_tags
 }
 
@@ -38,6 +38,6 @@ resource "azurerm_traffic_manager_endpoint" "tm_endpoint_project2_westus2" {
   resource_group_name = azurerm_resource_group.rg.name
   profile_name        = azurerm_traffic_manager_profile.tm_profile.name
   type                = "azureEndpoints"
-  target_resource_id  = data.terraform_remote_state.project2_westus2.outputs.web_lb_public_ip_address_id 
+  target_resource_id  = data.terraform_remote_state.project2_westus2.outputs.web_lb_public_ip_address_id
   weight              = 50
 }

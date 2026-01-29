@@ -4,17 +4,17 @@ terraform {
   required_version = ">= 1.0.0"
   required_providers {
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
       version = ">= 2.0"
     }
   }
-# Terraform State Storage to Azure Storage Container
+  # Terraform State Storage to Azure Storage Container
   backend "azurerm" {
-    resource_group_name   = "terraform-storage-rg"
-    storage_account_name  = "terraformstate201"
-    container_name        = "tfstatefiles"
-    key                   = "terraform.tfstate"
-  }   
+    resource_group_name  = "terraform-storage-rg"
+    storage_account_name = "terraformstate201"
+    container_name       = "tfstatefiles"
+    key                  = "terraform.tfstate"
+  }
 }
 
 #####################################################################
@@ -26,8 +26,8 @@ provider "azurerm" {
 # Block-3: Resource Block
 # Create a resource group
 resource "azurerm_resource_group" "myrg" {
-  name = "myrg-1"
-  location = var.azure_region 
+  name     = "myrg-1"
+  location = var.azure_region
 }
 # Create Virtual Network
 resource "azurerm_virtual_network" "myvnet" {
@@ -40,16 +40,16 @@ resource "azurerm_virtual_network" "myvnet" {
 # Block-4: Input Variables Block
 # Define a Input Variable for Azure Region 
 variable "azure_region" {
-  default = "eastus"
+  default     = "eastus"
   description = "Azure Region where resources to be created"
-  type = string
+  type        = string
 }
 #####################################################################
 # Block-5: Output Values Block
 # Output the Azure Resource Group ID 
 output "azure_resourcegroup_id" {
   description = "My Azure Resource Group ID"
-  value = azurerm_resource_group.myrg.id 
+  value       = azurerm_resource_group.myrg.id
 }
 #####################################################################
 # Block-6: Local Values Block

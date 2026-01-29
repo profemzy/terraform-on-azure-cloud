@@ -14,8 +14,8 @@ resource "azurerm_private_dns_zone_virtual_network_link" "private_dns_zone_vnet_
 
 # Resource-4: Internal Load Balancer
 resource "azurerm_private_dns_a_record" "app_lb_dns_record" {
-  depends_on = [azurerm_lb.app_lb]
-  name                = "applb" 
+  depends_on          = [azurerm_lb.app_lb]
+  name                = "applb"
   zone_name           = azurerm_private_dns_zone.private_dns_zone.name
   resource_group_name = azurerm_resource_group.rg.name
   ttl                 = 300

@@ -1,6 +1,6 @@
 # Locals Block for custom data
 locals {
-webvm_custom_data = <<CUSTOM_DATA
+  webvm_custom_data = <<CUSTOM_DATA
 #!/bin/sh
 #sudo yum update -y
 sudo yum install -y httpd
@@ -22,28 +22,28 @@ CUSTOM_DATA
 # Resource: Azure Linux Virtual Machine
 resource "azurerm_linux_virtual_machine" "web_linuxvm" {
   for_each = var.web_linuxvm_instance_count
-  name = "${local.resource_name_prefix}-web-linuxvm-${each.key}"
+  name     = "${local.resource_name_prefix}-web-linuxvm-${each.key}"
   #computer_name = "web-linux-vm"  # Hostname of the VM (Optional)
-  resource_group_name = azurerm_resource_group.rg.name
-  location = azurerm_resource_group.rg.location
-  size = "Standard_DS1_v2"
-  admin_username = "azureuser"
-  network_interface_ids = [ azurerm_network_interface.web_linuxvm_nic[each.key].id ]
+  resource_group_name   = azurerm_resource_group.rg.name
+  location              = azurerm_resource_group.rg.location
+  size                  = "Standard_DS1_v2"
+  admin_username        = "azureuser"
+  network_interface_ids = [azurerm_network_interface.web_linuxvm_nic[each.key].id]
   admin_ssh_key {
-    username = "azureuser"
+    username   = "azureuser"
     public_key = file("${path.module}/ssh-keys/terraform-azure.pub")
   }
   os_disk {
-    caching = "ReadWrite"
+    caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
   source_image_reference {
     publisher = "RedHat"
-    offer = "RHEL"
-    sku = "83-gen2"
-    version = "latest"
+    offer     = "RHEL"
+    sku       = "83-gen2"
+    version   = "latest"
   }
   #custom_data = filebase64("${path.module}/app-scripts/redhat-webvm-script.sh")    
-  custom_data = base64encode(local.webvm_custom_data)  
+  custom_data = base64encode(local.webvm_custom_data)
 
 }
