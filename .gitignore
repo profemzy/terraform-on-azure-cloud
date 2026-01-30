@@ -40,7 +40,9 @@ override.tf.json
 
 # SSH keys
 *.pem
-ssh-keys/*.pem
-ssh-keys/*.pub
-/19-Azure-VM-ScaleSets-Auto-scaling/terraform-manifests-autoscaling/ssh-keys/terraform-azure.pub
-/19-Azure-VM-ScaleSets-Auto-scaling/terraform-manifests-manualscaling/ssh-keys/terraform-azure.pub
+*.pub
+ssh-keys/
+**/ssh-keys/
+*.key
+ssl-self-signed/*.key
+**/ssl-self-signed/*.key
