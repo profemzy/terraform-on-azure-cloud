@@ -24,7 +24,7 @@ locals {
       sudo curl -H "Metadata:true" --noproxy "*" "http://169.254.169.254/metadata/instance?api-version=2020-09-01" -o /var/www/html/app1/metadata.html
     CUSTOM_DATA
 
-   bastion_host_custom_data = <<CUSTOM_DATA
+  bastion_host_custom_data = <<CUSTOM_DATA
       #!/bin/sh
       #sudo yum update -y
       sudo yum install -y httpd
