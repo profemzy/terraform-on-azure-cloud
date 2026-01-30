@@ -34,3 +34,8 @@ override.tf.json
 # IDE and AI assistant files
 .idea/
 .ai/
+
+# SSH keys
+*.pem
+ssh-keys/*.pem
+ssh-keys/*.pub
