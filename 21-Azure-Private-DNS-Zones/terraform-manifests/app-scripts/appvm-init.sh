@@ -1,0 +1,116 @@
+#!/bin/sh
+sudo yum install -y httpd
+sudo systemctl enable httpd
+sudo systemctl start httpd
+sudo systemctl stop firewalld
+sudo systemctl disable firewalld
+sudo chmod -R 777 /var/www/html 
+sudo mkdir /var/www/html/appvm
+
+# Create a beautiful landing page
+cat << 'EOF' > /var/www/html/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppVM - Stack Simplify</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #0056b3;
+            --bg-color: #f4f6f9;
+            --text-color: #333;
+            --card-bg: #ffffff;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            transition: transform 0.3s ease;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+        }
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #666;
+        }
+        .highlight {
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #e6f4ea;
+            color: #1e7e34;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        .metadata {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 0.9rem;
+            color: #999;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AppVM Application</h1>
+        <div class="status-badge">System Operational</div>
+        <p>Welcome to the <strong>Stack Simplify</strong> Application Tier.</p>
+        <p>This request is being served by Virtual Machine:</p>
+        <h2 class="highlight">HOST_NAME</h2>
+        
+        <div class="metadata">
+            <p>Environment: Terraform on Azure</p>
+            <p>Application Version: V1</p>
+        </div>
+        
+        <div class="footer">
+            &copy; 2026 InfoTitans. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>
+EOF
+
+# Inject Hostname
+sed -i "s/HOST_NAME/$(hostname)/g" /var/www/html/index.html
+
+# Create other pages
+echo "Welcome to stacksimplify - AppVM App1 - VM Hostname: $(hostname)" > /var/www/html/appvm/hostname.html
+echo "Welcome to stacksimplify - AppVM App1 - App Status Page" > /var/www/html/appvm/status.html
+cp /var/www/html/index.html /var/www/html/appvm/index.html
+
+# Metadata
+sudo curl -H "Metadata:true" --noproxy "*" "http://169.254.169.254/metadata/instance?api-version=2020-09-01" -o /var/www/html/appvm/metadata.html

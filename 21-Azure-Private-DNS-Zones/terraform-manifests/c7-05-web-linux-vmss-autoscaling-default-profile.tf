@@ -27,8 +27,8 @@ resource "azurerm_monitor_autoscale_setting" "web_vmss_autoscale" {
   # Notification  
   notification {
     email {
-      send_to_subscription_administrator    = true
-      send_to_subscription_co_administrator = true
+      send_to_subscription_administrator    = false
+      send_to_subscription_co_administrator = false
       custom_emails                         = ["myadminteam@ourorg.com"]
     }
   }

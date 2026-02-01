@@ -21,7 +21,7 @@ resource "azurerm_storage_account_static_website" "static_website" {
 # Resource-2: httpd files Container
 resource "azurerm_storage_container" "httpd_files_container" {
   name                  = "httpd-files-container"
-  storage_account_name  = azurerm_storage_account.storage_account.name
+  storage_account_id    = azurerm_storage_account.storage_account.id
   container_access_type = "private"
 }
 
