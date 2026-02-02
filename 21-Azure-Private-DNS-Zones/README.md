@@ -5,8 +5,8 @@ description: Create Azure Private DNS Zones using Terraform
 
 ## Step-00: Introduction
 ### Concepts
-1. Create Azure Private DNS Zone `terraformguru.com`
-2. Register the `Internal LB Static IP` to Private DNS name `applb.terraformguru.com`
+1. Create Azure Private DNS Zone `infotitans.com`
+2. Register the `Internal LB Static IP` to Private DNS name `applb.infotitans.com`
 3. Update the `app1.conf` which deploys on Web VMSS to Internal LB DNS Name instead of IP Address. 
 
 ### Azure Resources
@@ -18,8 +18,16 @@ description: Create Azure Private DNS Zones using Terraform
 2. c14-02-private-dns-zone.tf
 3. c14-03-private-dns-zone-outputs.tf
 
+### New Files: App Scripts (Refactored from c3-locals.tf)
+1. app-scripts/appvm-init.sh
+2. app-scripts/webvm-init.sh
+3. app-scripts/bastion-init.sh
+
 ### Update to Files
 1. app-scripts/app1.conf
+2. c3-locals.tf (Use external scripts)
+3. c7-05-web-linux-vmss-autoscaling-default-profile.tf (Fix autoscale notification)
+4. c12-04-app-linux-vmss-autoscaling-default-profile.tf (Fix autoscale notification)
 
 
 ## Step-01: c14-01-private-dns-zone-input-variables.tf
@@ -30,7 +38,7 @@ description: Create Azure Private DNS Zones using Terraform
 ```t
 # Resource-1: Create Azure Private DNS Zone
 resource "azurerm_private_dns_zone" "private_dns_zone" {
-  name                = "terraformguru.com"
+  name                = "infotitans.com"
   resource_group_name = azurerm_resource_group.rg.name
 }
 
@@ -69,7 +77,7 @@ LoadModule proxy_balancer_module modules/mod_proxy_balancer.so
 LoadModule proxy_http_module modules/mod_proxy_http.so
 
 <VirtualHost *:80>
-ServerName kubeoncloud.com
+ServerName infotitans.com
 ProxyPreserveHost On
 ProxyPass /webvm !
 
@@ -78,8 +86,8 @@ ProxyPass /webvm !
 #ProxyPassReverse / http://10.1.11.241/
 
 # Use the below when using Private DNS Section - Section-16
-ProxyPass / http://applb.terraformguru.com/
-ProxyPassReverse / http://applb.terraformguru.com/
+ProxyPass / http://applb.infotitans.com/
+ProxyPassReverse / http://applb.infotitans.com/
 
 DocumentRoot /var/www/html
 <Directory /var/www/html>
@@ -112,7 +120,7 @@ terraform apply -auto-approve
 ssh -i ssh-keys/terraform-azure.pem azure@<Bastion-Public-IP>
 
 # Perform nslookup Tests - Verify Private DNS
-nslookup applb.terraformguru.com
+nslookup applb.infotitans.com
 ```
 
 
@@ -268,7 +276,7 @@ exit
 
 # From Bastion Host - perform Curl Test to Azure Internal Standard Load Balancer
 curl http://<APP-Loadbalancer-DNS>
-curl http://applb.terraformguru.com
+curl http://applb.infotitans.com
 
 ## Sample Ouptut
 [root@hr-dev-bastion-linuxvm tmp]# curl http://10.1.11.241
