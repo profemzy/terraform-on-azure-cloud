@@ -1,7 +1,7 @@
 # Datasource: Get DNS Record
 data "azurerm_dns_zone" "dns_zone" {
-  name                = "kubeoncloud.com"
-  resource_group_name = "dns-zones"
+  name                = "wackops.xyz"
+  resource_group_name = "dns-mgt"
 }
 
 # Resource-1: Add ROOT Record Set in DNS Zone

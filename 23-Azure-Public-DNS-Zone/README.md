@@ -21,7 +21,7 @@ description: Create Azure Public DNS Zones using Terraform
 ```t
 # Datasource: Get DNS Record
 data "azurerm_dns_zone" "dns_zone" {
-  name                = "kubeoncloud.com"
+  name                = "wackops.xyz"
   resource_group_name = "dns-zones"
 }
 
@@ -101,26 +101,27 @@ terraform apply -auto-approve
 ## Step-05: Verify Resources - Public DNS Records
 ```t
 # Verify Public DNS Records
-kubeoncloud.com
-www.kubeoncloud.com
-app1.kubeoncloud.com
+wackops.xyz
+www.wackops.xyz
+app1.wackops.xyz
 
 # Wait for 10 to 15 mins to have entire provisioning completed
 - All the resources will be provisioned from custom_data perspective in both Web and App Linux VMs
 
 # Access App VM Pages (index.html page will be served from AppVM )
-http://kubeoncloud.com
-http://www.kubeoncloud.com
-http://app1.kubeoncloud.com
-http://kubeoncloud.com/appvm/index.html
-http://www.kubeoncloud.com/appvm/index.html
-http://app1.kubeoncloud.com/appvm/index.html
+http://wackops.xyz
+http://www.wackops.xyz
+http://app1.wackops.xyz
+http://wackops.xyz/appvm/index.html
+http://www.wackops.xyz/appvm/index.html
+http://app1.wackops.xyz/appvm/index.html
 
 
 # Access Web VM Pages
-http://kubeoncloud.com/webvm/index.html
-http://www.kubeoncloud.com/webvm/index.html
-http://app1.kubeoncloud.com/webvm/index.html
+http://wackops.xyz/webvm/index.html
+
+http://www.wackops.xyz/webvm/index.html
+http://app1.wackops.xyz/webvm/index.html
 ```
 
 ## Step-06: Delete Resources
