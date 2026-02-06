@@ -8,7 +8,7 @@ terraform {
     }
     random = {
       source  = "hashicorp/random"
-      version = ">= 3.0"
+      version = ">= 3.6.0"
     }
   }
 }
@@ -23,7 +23,7 @@ resource "random_string" "myrandom" {
   length  = 6
   upper   = false
   special = false
-  number  = false
+  numeric = false
 }
 
 
