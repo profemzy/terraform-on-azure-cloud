@@ -8,4 +8,5 @@ locals {
     owners      = local.owners
     environment = local.environment
   }
-} 
+  webvm_custom_data = templatefile("${path.module}/app-scripts/webvm-init.sh", {})
+}
